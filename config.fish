@@ -4,6 +4,7 @@ set -x PATH ~/go/bin $PATH
 set -x PATH ~/.local/bin $PATH
 set -x PATH /opt/homebrew/bin $PATH
 set -U GEM_HOME ~/.local/share/nvim/lsp_servers/solargraph
+set -U PGGSSENCMODE disable
 set -U EDITOR lvim
 
 #aliases
