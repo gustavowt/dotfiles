@@ -253,6 +253,9 @@ autocmd(
 -- Additional Plugins
 lvim.plugins = {
   {
+    'christoomey/vim-tmux-navigator'
+  },
+  {
     "lukas-reineke/lsp-format.nvim",
     config = function()
       require("lsp-format").setup()
