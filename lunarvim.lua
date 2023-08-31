@@ -168,25 +168,25 @@ autocmd(
 --     filetypes = { "typescript", "typescriptreact" },
 --   },
 -- }
-local nvim_lsp = require("lspconfig")
+-- local nvim_lsp = require("lspconfig")
 
-nvim_lsp.solargraph.setup {
-  cmd = { "solargraph", "stdio" },
-  filetypes = { "ruby", "rakefile" },
-  root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git", "."),
-  on_attach = require("lsp-format").on_attach,
-  settings = {
-    solargraph = {
-      autoformat = true,
-      completion = true,
-      diagnostic = true,
-      folding = true,
-      references = true,
-      rename = true,
-      symbols = true
-    }
-  }
-}
+-- nvim_lsp.solargraph.setup {
+--   cmd = { "solargraph", "stdio" },
+--   filetypes = { "ruby", "rakefile" },
+--   root_dir = nvim_lsp.util.root_pattern("Gemfile", ".git", "."),
+--   on_attach = require("lsp-format").on_attach,
+--   settings = {
+--     solargraph = {
+--       autoformat = true,
+--       completion = true,
+--       diagnostic = true,
+--       folding = true,
+--       references = true,
+--       rename = true,
+--       symbols = true
+--     }
+--   }
+-- }
 
 -- local lspconfig = require("lspconfig")
 -- local configs = require("lspconfig.configs")
