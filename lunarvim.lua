@@ -130,7 +130,7 @@ lvim.plugins = {
   { "oberblastmeister/neuron.nvim" },
   {
     "anuvyklack/windows.nvim",
-    requires = {
+    dependencies = {
       "anuvyklack/middleclass",
       "anuvyklack/animation.nvim"
     },
