@@ -97,6 +97,18 @@ nvim_lsp.solargraph.setup {
 -- Additional Plugins
 lvim.plugins = {
   {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
+  {
     'christoomey/vim-tmux-navigator'
   },
   {
@@ -144,3 +156,23 @@ lvim.plugins = {
 }
 
 require 'luasnip'.filetype_extend("ruby", { "rails" })
+
+-- Copilot config
+
+local ok, copilot = pcall(require, "copilot")
+if not ok then
+  return
+end
+
+copilot.setup {
+  suggestion = {
+    keymap = {
+      accept = "<c-l>",
+      next = "<c-j>",
+      prev = "<c-k>",
+      dismiss = "<c-h>",
+    },
+  },
+}
+
+lvim.builtin.which_key.mappings["C"] = { "<cmd>lua require('copilot.suggestion').toggle_auto_trigger()<CR>", "Copilot" }
