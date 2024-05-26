@@ -1,0 +1,88 @@
+local wk = require("which-key")
+
+wk.register({
+	["e"] = { "<cmd>Neotree<CR>", "Explorer" },
+	["w"] = { "<cmd>w!<CR>", "Save" },
+	["q"] = { "<cmd>confirm q<CR>", "Quit" },
+	["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
+	["c"] = { "<cmd>BufferClose<CR>", "Close Buffer" },
+	["f"] = { "<cmd>Telescope find_files<CR>", "Find files" },
+	b = {
+		name = "Buffers",
+		j = { "<cmd>BufferPick<cr>", "Jump" },
+		f = { "<cmd>Telescope buffers previewer=false<cr>", "Find" },
+		e = {
+			"<cmd>BufferPickClose<cr>",
+			"Pick which buffer to close",
+		},
+		h = { "<cmd>BufferCloseLeft<cr>", "Close all to the left" },
+		l = {
+			"<cmd>BufferCloseRight<cr>",
+			"Close all to the right",
+		},
+		N = {
+			"<cmd>BufferOrderByName<cr>",
+			"Sort by directory",
+		},
+		L = {
+			"<cmd>BufferOrderByLanguage<cr>",
+			"Sort by language",
+		},
+	},
+	p = {
+		name = "Plugins",
+		i = { "<cmd>Lazy install<cr>", "Install" },
+		s = { "<cmd>Lazy sync<cr>", "Sync" },
+		S = { "<cmd>Lazy clear<cr>", "Status" },
+		c = { "<cmd>Lazy clean<cr>", "Clean" },
+		u = { "<cmd>Lazy update<cr>", "Update" },
+		p = { "<cmd>Lazy profile<cr>", "Profile" },
+		l = { "<cmd>Lazy log<cr>", "Log" },
+		d = { "<cmd>Lazy debug<cr>", "Debug" },
+	},
+	l = {
+		name = "LSP",
+		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		d = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
+		w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
+		f = { "<cmd>lua vim.lsp.buf.format()<cr>", "Format" },
+		i = { "<cmd>LspInfo<cr>", "Info" },
+		I = { "<cmd>Mason<cr>", "Mason Info" },
+		r = { "<cmd>lua vim.lsp.buf.references()", "References" },
+		j = {
+			"<cmd>lua vim.diagnostic.goto_next()<cr>",
+			"Next Diagnostic",
+		},
+	},
+	t = {
+		name = "Test",
+		n = { "<cmd>TestNearest<CR>", "Nearest" },
+		f = { "<cmd>TestFile<CR>", "File" },
+		s = { "<cmd>TestSuite<CR>", "Suite" },
+		l = { "<cmd>TestLast<CR>", "Last" },
+		v = { "<cmd>TestVisit<CR>", "Visit" },
+	},
+	g = {
+		p = { "<cmd>:Gitsigns preview_hunk<CR>", "Preview" },
+		b = { "<cmd>:Gitsigns toggle_current_line_blame<CR>", "Preview" },
+	},
+	s = {
+		name = "Search",
+		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+		c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+		f = { "<cmd>Telescope find_files<cr>", "Find File" },
+		h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+		H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
+		M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+		R = { "<cmd>Telescope registers<cr>", "Registers" },
+		t = { "<cmd>Telescope live_grep<cr>", "Text" },
+		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+		C = { "<cmd>Telescope commands<cr>", "Commands" },
+		l = { "<cmd>Telescope resume<cr>", "Resume last search" },
+		p = {
+			"<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
+			"Colorscheme with Preview",
+		},
+	},
+}, { prefix = "<leader>" })
