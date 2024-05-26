@@ -11,7 +11,7 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save.enabled = true
-lvim.colorscheme = "kanagawa"
+lvim.colorscheme = "catppuccin-macchiato"
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
@@ -23,6 +23,7 @@ lvim.keys.normal_mode["<S-l>"] = ":bnext<CR>"
 lvim.keys.normal_mode["<S-h>"] = ":bprevious<CR>"
 lvim.keys.normal_mode["<S-F>"] = ":NvimTreeFocus<CR>"
 lvim.builtin.which_key.mappings["F"] = { "<cmd>Telescope buffers<CR>", "Buffers" }
+lvim.builtin.which_key.mappings["U"] = { "<cmd>UndotreeToggle<CR>", "Undotree" }
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -160,6 +161,9 @@ vim.opt.conceallevel = 1
 
 -- Additional Plugins
 lvim.plugins = {
+  { "AndrewRadev/splitjoin.vim" },
+  { "mbbill/undotree" },
+  { "catppuccin/nvim",          name = "catppuccin", priority = 1000 },
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
@@ -207,6 +211,12 @@ lvim.plugins = {
     end,
   },
   { "rebelot/kanagawa.nvim" },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
   {
     "windwp/nvim-spectre",
     event = "BufRead",

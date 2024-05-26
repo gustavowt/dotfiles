@@ -18,5 +18,7 @@ alias bengem='bundle exec engem'
 alias clear_drive='rm -rf .fseventsd ._.Trashes .Trashes .Spotlight-V100'
 alias rtest='env SPEC=true ruby -Itest'
 alias mt='ctags -R ./app/ ./lib/'
+alias cat="bat --theme='Solarized (dark)'"
 
 source /opt/homebrew/opt/asdf/libexec/asdf.fish
+status --is-interactive; and rbenv init - fish | source
