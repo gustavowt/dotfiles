@@ -14,6 +14,7 @@ if not vim.loop.fs_stat(lazypath) then
 require("lazy").setup("plugins")
 
 require("vim-options")
-require("relative-line-number")
+-- require("relative-line-number")
 require("which-key-config")
 require("custom-bindings")
+-- require("ruby-lsp")

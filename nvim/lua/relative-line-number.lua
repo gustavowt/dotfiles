@@ -15,7 +15,7 @@ autocmd(
   { "BufLeave", "InsertEnter", "FocusLost" },
   {
     pattern = "*",
-    command = "set norelativenumber",
+    command = vim.api.nvim_buf_set_option(0,'relativenumber',false),
     group = 'LineNumberToggle',
     desc = "Turn off relative line numbering when the buffer is exited.",
   }
