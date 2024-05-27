@@ -12,7 +12,7 @@ return {
         require("window-picker").setup({
           filter_rules = {
             include_current_win = false,
-            autoselect_one = true,
+            autoselect_one = false,
             -- filter using buffer options
             bo = {
               -- if the file type is one of following, the window will be ignored
