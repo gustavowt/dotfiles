@@ -1,7 +1,7 @@
 local wk = require("which-key")
 
 wk.register({
-	["e"] = { "<cmd>Neotree<CR>", "Explorer" },
+	["e"] = { "<cmd>Neotree toggle<CR>", "Explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["q"] = { "<cmd>confirm q<CR>", "Quit" },
 	["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
@@ -15,9 +15,9 @@ wk.register({
 			"<cmd>BufferPickClose<cr>",
 			"Pick which buffer to close",
 		},
-		h = { "<cmd>BufferCloseLeft<cr>", "Close all to the left" },
+		h = { "<cmd>BufferCloseBuffersLeft<cr>", "Close all to the left" },
 		l = {
-			"<cmd>BufferCloseRight<cr>",
+			"<cmd>BufferCloseBuffersRight<cr>",
 			"Close all to the right",
 		},
 		N = {
@@ -64,7 +64,7 @@ wk.register({
 	},
 	g = {
 		p = { "<cmd>:Gitsigns preview_hunk<CR>", "Preview" },
-		b = { "<cmd>:Gitsigns toggle_current_line_blame<CR>", "Preview" },
+		b = { "<cmd>:Gitsigns toggle_current_line_blame<CR>", "Blame" },
 	},
 	s = {
 		name = "Search",

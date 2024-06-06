@@ -11,8 +11,8 @@ return {
       config = function()
         require("window-picker").setup({
           filter_rules = {
-            include_current_win = false,
-            autoselect_one = false,
+            include_current_win = true,
+            autoselect_one = true,
             -- filter using buffer options
             bo = {
               -- if the file type is one of following, the window will be ignored
@@ -28,8 +28,9 @@ return {
   config = function()
     require("neo-tree").setup({
       follow_current_file = {
-        enable = true,
+        enabled = true,
         update_cwd = true,
+        leave_dirs_open = false,
       },
       window = {
         mappings = {
@@ -40,6 +41,7 @@ return {
           ["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = true } },
           ["S"] = "split_with_window_picker",
           ["s"] = "vsplit_with_window_picker",
+          ["l"] = "open_with_window_picker",
         },
 
         mapping_options = {
