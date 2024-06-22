@@ -5,16 +5,17 @@ return {
 		null_ls.setup({
 			sources = {
 				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.formatting.prettier,
+				null_ls.builtins.formatting.prettierd,
 				null_ls.builtins.diagnostics.erb_lint,
 				null_ls.builtins.diagnostics.ruby_lsp,
 				null_ls.builtins.diagnostics.rubocop,
 			},
+			debug = true,
 		})
 
 		-- Create a new formatter for ruby using prettier ruby
-		local prettier_ruby = null_ls.builtins.formatting.prettier.with({
-			command = "prettier",
+		local prettier_ruby = null_ls.builtins.formatting.prettierd.with({
+			command = "prettierd",
 		})
 
 		null_ls.register({

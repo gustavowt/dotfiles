@@ -7,3 +7,7 @@ vim.keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", {})
 vim.keymap.set("n", "gr", "<Cmd>lua vim.lsp.buf.references()<cr>", {})
 vim.keymap.set("n", "gI", "<Cmd>lua vim.lsp.buf.implementation()<cr>", {})
 vim.keymap.set("n", "gs", "<Cmd>lua vim.lsp.buf.signature_help()<cr>", {})
+
+-- NvimTree
+vim.keymap.set("n", "F", "<Cmd>:NvimTreeFindFile<CR>", {})
+

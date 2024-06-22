@@ -7,9 +7,6 @@ return {
 			show_tab_close_icons = false,
 			show_index = true,
 			auto_hide = false,
-			sidebar_filetypes = {
-				["neo-tree"] = { event = "BufWipeout" },
-			},
 		})
 	end,
 }

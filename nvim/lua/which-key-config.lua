@@ -1,7 +1,7 @@
 local wk = require("which-key")
 
 wk.register({
-	["e"] = { "<cmd>Neotree toggle<CR>", "Explorer" },
+	["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["q"] = { "<cmd>confirm q<CR>", "Quit" },
 	["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
@@ -65,6 +65,7 @@ wk.register({
 	g = {
 		p = { "<cmd>:Gitsigns preview_hunk<CR>", "Preview" },
 		b = { "<cmd>:Gitsigns toggle_current_line_blame<CR>", "Blame" },
+		u = { "<cmd>:Git push origin HEAD<CR>", "Push HEAD" },
 	},
 	s = {
 		name = "Search",
