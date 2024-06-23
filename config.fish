@@ -21,3 +21,4 @@ alias bat="bat --theme='Solarized (dark)'"
 
 source /opt/homebrew/opt/asdf/libexec/asdf.fish
 status --is-interactive; and rbenv init - fish | source
+nvm use lts
