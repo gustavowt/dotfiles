@@ -38,6 +38,36 @@ return {
 				vim.keymap.set("n", "y", api.fs.copy.filename, opts("Copy Name"))
 				vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
 			end,
+			hijack_directories = {
+				enable = false,
+				auto_open = true,
+			},
+			update_focused_file = {
+				enable = true,
+				update_root = {
+					enable = true,
+					ignore_list = {},
+				},
+				exclude = false,
+			},
+			diagnostics = {
+				enable = true,
+				show_on_dirs = false,
+				show_on_open_dirs = true,
+				debounce_delay = 50,
+				severity = {
+					min = vim.diagnostic.severity.HINT,
+					max = vim.diagnostic.severity.ERROR,
+				},
+			},
+			git = {
+				enable = true,
+				show_on_dirs = true,
+				show_on_open_dirs = true,
+				disable_for_dirs = {},
+				timeout = 400,
+				cygwin_support = false,
+			},
 			sort = {
 				sorter = "case_sensitive",
 			},
