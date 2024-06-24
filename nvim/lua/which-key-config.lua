@@ -5,28 +5,20 @@ wk.register({
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["q"] = { "<cmd>confirm q<CR>", "Quit" },
 	["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
-	["c"] = { "<cmd>BufferClose<CR>", "Close Buffer" },
+	["c"] = { "<cmd>lua require 'commands'.buf_kill('bd')<CR>", "Close Buffer" },
 	["f"] = { "<cmd>Telescope find_files<CR>", "Find files" },
 	b = {
 		name = "Buffers",
-		j = { "<cmd>BufferPick<cr>", "Jump" },
+		j = { "<cmd>BufferLinePick<cr>", "Jump" },
 		f = { "<cmd>Telescope buffers previewer=false<cr>", "Find" },
 		e = {
-			"<cmd>BufferPickClose<cr>",
+			"<cmd>BufferLinePickClose<cr>",
 			"Pick which buffer to close",
 		},
-		h = { "<cmd>BufferCloseBuffersLeft<cr>", "Close all to the left" },
+		h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
 		l = {
-			"<cmd>BufferCloseBuffersRight<cr>",
+			"<cmd>BufferLineCloseRight<cr>",
 			"Close all to the right",
-		},
-		N = {
-			"<cmd>BufferOrderByName<cr>",
-			"Sort by directory",
-		},
-		L = {
-			"<cmd>BufferOrderByLanguage<cr>",
-			"Sort by language",
 		},
 	},
 	p = {
