@@ -26,7 +26,6 @@ return {
 				separator_style = "thin",
 				enforce_regular_tabs = false,
 				always_show_bufferline = true,
-				sort_by = "extension",
 				offsets = {
 					{
 						filetype = "NvimTree",
