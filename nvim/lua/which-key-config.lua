@@ -1,5 +1,19 @@
 local wk = require("which-key")
 
+-- register visual mappings
+wk.register({
+	["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle linewise (visual)" },
+	l = {
+		name = "LSP",
+		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+	},
+	g = {
+		name = "Git",
+		r = { "<cmd>Gitsigns reset_hunk<cr>", "Reset Hunk" },
+		s = { "<cmd>Gitsigns stage_hunk<cr>", "Stage Hunk" },
+	},
+}, { mode = "v", prefix = "<leader>" })
+
 wk.register({
 	["e"] = { "<cmd>NvimTreeToggle<CR>", "Explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },
