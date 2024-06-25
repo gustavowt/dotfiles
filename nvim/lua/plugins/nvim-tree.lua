@@ -18,8 +18,8 @@ return {
 				vim.keymap.set("n", "l", api.node.open.edit, opts("Edit Or Open"))
 				vim.keymap.set("n", "o", api.node.open.edit, opts("Edit Or Open"))
 				vim.keymap.set("n", "<CR>", api.node.open.edit, opts("Edit Or Open"))
-				vim.keymap.set("n", "v", api.node.open.vertical, opts("Vertical split"))
-				vim.keymap.set("n", "s", api.node.open.horizontal, opts("Horizontal split"))
+				vim.keymap.set("n", "<C-v>", api.node.open.vertical, opts("Vertical split"))
+				vim.keymap.set("n", "<C-x>", api.node.open.horizontal, opts("Horizontal split"))
 				vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("Close"))
 				vim.keymap.set("n", "H", api.tree.collapse_all, opts("Collapse All"))
 				vim.keymap.set("n", "C", api.tree.change_root_to_node, opts("CD"))
@@ -37,6 +37,8 @@ return {
 				vim.keymap.set("n", "W", api.tree.collapse_all, opts("Collapse"))
 				vim.keymap.set("n", "y", api.fs.copy.filename, opts("Copy Name"))
 				vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
+				vim.keymap.set("n", "x", api.fs.cut, opts("Cut"))
+				vim.keymap.set("n", "p", api.fs.paste, opts("Paste"))
 			end,
 			hijack_directories = {
 				enable = false,

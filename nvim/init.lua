@@ -17,5 +17,7 @@ require("vim-options")
 require("which-key-config")
 require("custom-bindings")
 require("ruby-lsp")
-require("format-on-save")
 require("lsp-config")
+
+require("format-on-save")
+require("nvimtree-on-vimenter")
