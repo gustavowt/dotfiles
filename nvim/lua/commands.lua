@@ -73,4 +73,12 @@ function M.buf_kill(kill_command, bufnr, force)
 	end
 end
 
+function M.lsp_format()
+	vim.lsp.buf.format({
+		filter = function(client)
+			return client.name ~= "tsserver"
+		end,
+	})
+end
+
 return M
