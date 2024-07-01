@@ -18,6 +18,7 @@ require("which-key-config")
 require("custom-bindings")
 require("ruby-lsp")
 require("lsp-config")
+require("lualine-config")
 
 require("format-on-save")
 require("nvimtree-on-vimenter")
