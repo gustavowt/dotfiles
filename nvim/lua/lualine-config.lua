@@ -46,6 +46,14 @@ local config = {
 			normal = { c = { fg = colors.fg, bg = colors.bg } },
 			inactive = { c = { fg = colors.fg, bg = colors.bg } },
 		},
+		disabled_filetypes = { "packer", "NVIMTREE" },
+		filetype_names = {
+			TelescopePrompt = "Telescope",
+			dashboard = "Dashboard",
+			packer = "Packer",
+			fzf = "FZF",
+			alpha = "Alpha",
+		},
 	},
 	sections = {
 		-- these are to remove the defaults
@@ -193,6 +201,12 @@ ins_right({
 	fmt = string.upper,
 	icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
 	color = { fg = colors.green, gui = "bold" },
+})
+ins_right({
+	"filetype",
+	fmt = string.upper,
+	icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+	color = { fg = colors.violet, gui = "bold" },
 })
 
 ins_right({
