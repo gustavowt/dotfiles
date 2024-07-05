@@ -10,7 +10,6 @@ return {
 				null_ls.builtins.diagnostics.ruby_lsp,
 				null_ls.builtins.diagnostics.rubocop,
 			},
-			debug = true,
 		})
 
 		-- Create a new formatter for ruby using prettier ruby

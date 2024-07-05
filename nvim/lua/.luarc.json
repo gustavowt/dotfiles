@@ -1,6 +1,7 @@
 {
   "diagnostics.globals": [
     "vim",
-        "_timers"
+        "_timers",
+        "on_attach"
   ]
 }

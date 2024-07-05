@@ -21,6 +21,7 @@ wk.register({
 	["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment toggle current line" },
 	["c"] = { "<cmd>lua require 'commands'.buf_kill('bd')<CR>", "Close Buffer" },
 	["f"] = { "<cmd>Telescope find_files<CR>", "Find files" },
+	["P"] = { "<cmd>Copilot panel<CR>", "Copilot panel" },
 	b = {
 		name = "Buffers",
 		j = { "<cmd>BufferLinePick<cr>", "Jump" },

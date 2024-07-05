@@ -204,7 +204,6 @@ ins_right({
 })
 ins_right({
 	"filetype",
-	fmt = string.upper,
 	icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
 	color = { fg = colors.violet, gui = "bold" },
 })
