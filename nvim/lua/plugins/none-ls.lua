@@ -9,7 +9,9 @@ return {
 				null_ls.builtins.diagnostics.erb_lint,
 				null_ls.builtins.diagnostics.ruby_lsp,
 				null_ls.builtins.diagnostics.rubocop,
+				null_ls.builtins.diagnostics.esling_d,
 			},
+			debug = true,
 		})
 
 		-- Create a new formatter for ruby using prettier ruby

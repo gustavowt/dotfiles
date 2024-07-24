@@ -1,0 +1,6 @@
+import = [
+  "~/.config/alacritty/themes/dracula.toml",
+  "~/.config/alacritty/font.toml",
+  "~/.config/alacritty/window.toml",
+  "~/.config/alacritty/url-hint.toml",
+]

@@ -54,6 +54,7 @@ local config = {
 			fzf = "FZF",
 			alpha = "Alpha",
 		},
+		extensions = { "nvim-tree", "Telescope", "quickfix" },
 	},
 	sections = {
 		-- these are to remove the defaults

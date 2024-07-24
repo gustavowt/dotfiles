@@ -6,7 +6,7 @@ set -x PATH /opt/homebrew/bin $PATH
 set -x PATH ~/Library/Python/3.11/bin $PATH
 set -Ux OBJC_DISABLE_INITIALIZE_FORK_SAFETY YES
 set -Ux PGGSSENCMODE disable
-set -Ux EDITOR lvim
+set -Ux EDITOR nvim
 
 #aliases
 alias rake='bundle exec rake'

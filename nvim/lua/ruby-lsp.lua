@@ -74,7 +74,10 @@ end
 
 require("lspconfig").ruby_lsp.setup({
 	on_attach = function(client, buffer)
-		setup_diagnostics(client, buffer)
+		-- setup_diagnostics(client, buffer)
 		add_ruby_deps_command(client, buffer)
 	end,
+	init_options = {
+		formatter = "prettierd",
+	},
 })
