@@ -75,7 +75,6 @@ end
 
 function M.lsp_format()
 	vim.lsp.buf.format({
-		bufnr = bufnr,
 		filter = function(client)
 			return client.name == "null-ls"
 		end,

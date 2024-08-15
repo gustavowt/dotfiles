@@ -88,6 +88,8 @@ wk.register({
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
 		l = { "<cmd>Telescope resume<cr>", "Resume last search" },
+		F = { "<cmd>Telescope file_browser<cr>", "File browser" },
+		Y = { "<cmd>Telescope frecency<cr>", "Frecency algorithm" },
 		p = {
 			"<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
 			"Colorscheme with Preview",

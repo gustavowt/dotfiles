@@ -21,4 +21,4 @@ require("lsp-config")
 require("lualine-config")
 
 require("format-on-save")
-require("nvimtree-on-vimenter")
+-- require("nvimtree-on-vimenter")
