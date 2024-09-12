@@ -1,5 +1,8 @@
 return {
 	"nvimtools/none-ls.nvim",
+	dependencies = {
+		"nvimtools/none-ls-extras.nvim",
+	},
 	config = function()
 		local null_ls = require("null-ls")
 		null_ls.setup({
@@ -7,9 +10,10 @@ return {
 				null_ls.builtins.formatting.stylua,
 				null_ls.builtins.formatting.prettierd,
 				null_ls.builtins.diagnostics.erb_lint,
-				null_ls.builtins.diagnostics.ruby_lsp,
 				null_ls.builtins.diagnostics.rubocop,
-				null_ls.builtins.diagnostics.esling_d,
+				require("none-ls.diagnostics.eslint_d"),
+				-- null_ls.builtins.diagnostics.ruby_lsp,
+				-- null_ls.diagnostics.esling_d,
 			},
 			debug = true,
 		})
