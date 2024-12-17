@@ -33,7 +33,7 @@ return {
 				vim.keymap.set("n", "<C-t>", api.node.open.tab, opts("Open: New Tab"))
 				vim.keymap.set("n", "H", api.tree.toggle_hidden_filter, opts("Toggle Dotfiles"))
 				vim.keymap.set("n", "r", api.fs.rename, opts("Rename"))
-				vim.keymap.set("n", "R", api.tree.reload, opts("Refresh"))
+				vim.keymap.set("n", "<S-r>", api.tree.reload, opts("Refresh"))
 				vim.keymap.set("n", "W", api.tree.collapse_all, opts("Collapse"))
 				vim.keymap.set("n", "y", api.fs.copy.filename, opts("Copy Name"))
 				vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
