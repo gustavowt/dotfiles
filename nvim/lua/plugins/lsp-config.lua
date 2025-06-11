@@ -11,6 +11,7 @@ return {
 		lazy = false,
 		opts = {
 			auto_install = true,
+			automatic_enable = false,
 		},
 	},
 	{
@@ -28,17 +29,6 @@ return {
 				ensure_installed = vim.tbl_keys(servers),
 			})
 
-			mason_lspconfig.setup_handlers({
-				function(server_name)
-					require("lspconfig")[server_name].setup({
-						capabilities = capabilities,
-						on_attach = on_attach,
-						settings = servers[server_name],
-						filetypes = (servers[server_name] or {}).filetypes,
-					})
-				end,
-			})
-
 			lspconfig.ts_ls.setup({
 				capabilities = capabilities,
 			})
@@ -48,8 +38,12 @@ return {
 			lspconfig.lua_ls.setup({
 				capabilities = capabilities,
 			})
+			lspconfig.ruby_lsp.setup({
+				capabilities = capabilities,
+			})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+			vim.keymap.set("n", "gr", vim.lsp.buf.references, {})
 		end,
 	},
 	{

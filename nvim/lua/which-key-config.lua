@@ -22,7 +22,7 @@ wk.add({
 	{ "<leader>lf", "<cmd>lua require('commands').lsp_format()<cr>", desc = "Format" },
 	{ "<leader>li", "<cmd>LspInfo<cr>", desc = "Info" },
 	{ "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<cr>", desc = "Next Diagnostic" },
-	{ "<leader>lr", "<cmd>lua vim.lsp.buf.references()", desc = "References" },
+	{ "<leader>lr", "<cmd>lua vim.lsp.buf.references()<cr>", desc = "References" },
 	{ "<leader>lw", "<cmd>Telescope diagnostics<cr>", desc = "Diagnostics" },
 	{ "<leader>p", group = "Plugins", icon = { icon = "󰒔", color = "azuere" } },
 	{ "<leader>pS", "<cmd>Lazy clear<cr>", desc = "Status" },
@@ -72,6 +72,11 @@ wk.add({
 	{ "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", desc = "Stage Hunk", mode = "v" },
 	{ "<leader>l", group = "LSP", mode = "v" },
 	{ "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action", mode = "v" },
+	{ "<leader>z", group = "Quickfix", icon = "󰉺" },
+	{ "<leader>zd", "<cmd>colder<CR>", desc = "Older item" },
+	{ "<leader>zl", "<cmd>cnext<CR>", desc = "Next item" },
+	{ "<leader>zh", "<cmd>cprev<CR>", desc = "Previous item" },
+	{ "<leader>zu", "<cmd>cnext<CR>", desc = "Newer item" },
 })
 -- -- register visual mappings
 -- wk.register({

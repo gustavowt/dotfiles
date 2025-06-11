@@ -6,7 +6,6 @@ vim.cmd("set nowrap")
 vim.cmd("set number")
 vim.cmd("set clipboard+=unnamed")
 vim.cmd("set autoindent")
-vim.cmd("set go+=a")
 vim.cmd("set wildmenu")
 vim.cmd("set wildmode=longest:full,full")
 
