@@ -73,10 +73,44 @@ function M.buf_kill(kill_command, bufnr, force)
 	end
 end
 
-function M.lsp_format()
+function M.lsp_format(bufnr)
+	bufnr = bufnr or vim.api.nvim_get_current_buf()
+
+	-- Only autoformat for these types (avoid “no matching server”)
+	local ok_ft = {
+		ruby = true,
+		eruby = true,
+		lua = true,
+		-- add others you configured
+	}
+	if not ok_ft[vim.bo[bufnr].filetype] then
+		return
+	end
+
+	local clients = vim.lsp.get_clients({ bufnr = bufnr })
+	local has_formatter = false
+	for _, c in ipairs(clients) do
+		if c.supports_method and c:supports_method("textDocument/formatting") then
+			has_formatter = true
+			break
+		end
+	end
+	if not has_formatter then
+		return
+	end
+
 	vim.lsp.buf.format({
+		bufnr = bufnr,
+		async = false,
+		timeout_ms = 5000,
 		filter = function(client)
-			return client.name == "null-ls"
+			if client.name == "null-ls" then
+				return true
+			end -- prefer null-ls (Rubocop)
+			if vim.bo[bufnr].filetype == "ruby" and client.name == "ruby_lsp" then
+				return true
+			end
+			return false
 		end,
 	})
 end

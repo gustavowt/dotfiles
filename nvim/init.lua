@@ -20,5 +20,6 @@ require("ruby-lsp")
 require("lsp-config")
 require("lualine-config")
 
-require("format-on-save")
+-- require("format-on-save")
+require("vue-lsp-config")
 -- require("nvimtree-on-vimenter")
