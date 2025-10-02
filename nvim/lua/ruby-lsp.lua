@@ -85,14 +85,33 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 -- Or if you're not using nvim-cmp:
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-require("lspconfig").ruby_lsp.setup({
-	capabilities = capabilities,
-	on_attach = function(client, bufnr)
-		-- Enable completion triggered by <c-x><c-o>
-		-- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+local on_attach = function(client, bufnr)
+	-- Enable completion triggered by <c-x><c-o>
+	-- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-		-- Enable references and other features
-		local bufopts = { noremap = true, silent = true, buffer = bufnr }
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-	end,
-})
+	-- Enable references and other features
+	local bufopts = { noremap = true, silent = true, buffer = bufnr }
+	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+end
+
+if vim.lsp and vim.lsp.config then
+	-- Neovim 0.11+ API
+	vim.lsp.config("ruby_lsp", {
+		capabilities = capabilities,
+	})
+	vim.api.nvim_create_autocmd("LspAttach", {
+		callback = function(args)
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+			if client and client.name == "ruby_lsp" then
+				on_attach(client, args.buf)
+			end
+		end,
+	})
+	vim.lsp.enable("ruby_lsp")
+else
+	-- Neovim < 0.11 via nvim-lspconfig
+	require("lspconfig").ruby_lsp.setup({
+		capabilities = capabilities,
+		on_attach = on_attach,
+	})
+end
