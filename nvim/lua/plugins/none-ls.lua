@@ -10,11 +10,6 @@ return {
 				null_ls.builtins.diagnostics.erb_lint,
 				null_ls.builtins.diagnostics.rubocop,
 				require("none-ls.diagnostics.eslint_d"),
-<<<<<<< Updated upstream
-				-- null_ls.builtins.diagnostics.ruby_lsp,
-=======
-				-- ruby_lsp is configured as a proper LSP server, not via null-ls
->>>>>>> Stashed changes
 				-- null_ls.diagnostics.esling_d,
 			},
 			debug = true,
