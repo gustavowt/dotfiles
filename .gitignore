@@ -2,3 +2,4 @@
 .env
 ./fish/fish_variables
 fish/fish_variables
+fish/functions/_tide*.fish
