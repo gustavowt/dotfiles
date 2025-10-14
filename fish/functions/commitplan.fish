@@ -191,37 +191,16 @@ Constraints:
             end
         end
 
-        # Create temp file with commit message
+        # Create temp file with commit message template
         set -l temp_msg (mktemp)
         echo "$commit_title" > "$temp_msg"
         echo "" >> "$temp_msg"
         echo "$commit_body" >> "$temp_msg"
 
-        # Open editor
-        echo "✏️  Opening editor..."
-        set -l editor $EDITOR
-        if test -z "$editor"
-            set editor (git config core.editor)
-        end
-        if test -z "$editor"
-            set editor vim
-        end
-
-        eval $editor "$temp_msg"
-
-        # Check if user wants to proceed with commit
-        echo ""
-        read -P "Proceed with commit? [Y/n] " -n 1 proceed
-        echo ""
-
-        if test "$proceed" = "n" -o "$proceed" = "N"
-            echo "⏭️  Skipping commit (files remain staged)."
-            rm "$temp_msg"
-            continue
-        end
-
-        # Commit with edited message
-        git commit -F "$temp_msg"
+        # Use git commit with --template to get standard git commit format
+        # This includes commented status lines, column guides, and proper formatting
+        echo "✏️  Opening git commit editor..."
+        git commit --template="$temp_msg"
         set -l commit_status $status
         rm "$temp_msg"
 
