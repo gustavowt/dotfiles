@@ -66,6 +66,8 @@ Goals:
 - For each suggested commit, list the files to include and provide:
   - A short, specific title (max 72 chars).
   - A concise body (wrap to ~72 cols, bullets allowed).
+  - Be more natural and less robotic in your writing.
+  - No need to deatil every change, focus on the big picture.
 - Keep language direct. No filler or marketing tone.
 $style_hint
 
