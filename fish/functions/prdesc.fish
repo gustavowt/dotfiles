@@ -45,7 +45,8 @@ function prdesc
         return 1
     end
 
-    set -l diff (git diff --unified=0 --no-color $base...HEAD)
+    # Exclude cassette files from diff (they're large and not useful for PR context)
+    set -l diff (git diff --unified=0 --no-color $base...HEAD -- ':!spec/fixtures/cassettes')
     if test -z "$diff"
         echo "ℹ️  No changes vs $default_branch" >&2
         return 1
@@ -89,6 +90,8 @@ Rules:
 - Keep the body under 300 words.
 - Replace JIRA references with: https://doximity.atlassian.net/browse/$jira_ticket
 - MAKE sure dont change the layout of the template if provided. Do not add any extra style or remove anything
+- DO NOT add any preamble or postamble (e.g., 'Here is the PR', 'Let me know', etc.)
+- Output ONLY the PR title and body, nothing else
 
 Repository default branch: $default_branch
 Current branch: $current_branch
@@ -118,16 +121,39 @@ JIRA ticket: $jira_ticket
     # extract title (first line) and body (rest)
     set -l pr_title (head -n 1 "$temp_file")
     set -l pr_body (tail -n +3 "$temp_file" | string collect)  # skip title and blank line
+    
+    # Clean up AI response artifacts from the body
+    # Remove common prefixes/suffixes that Claude might add
+    set pr_body (echo "$pr_body" | sed -E '
+        /^(Here is|Here'\''s) (the|a) (PR|pull request|draft)/Id
+        /^I'\''ve (created|prepared|written)/Id
+        /^Based on (the diff|your changes)/Id
+        /^Let me know if/Id
+        /^Feel free to/Id
+        /^Please (let me know|feel free)/Id
+    ')
+    
+    # Trim any leading/trailing whitespace
+    set pr_body (echo "$pr_body" | string trim)
 
     echo "📋 Creating PR with gh..."
     echo "Title: $pr_title"
+
+    # Ask if this should be a draft PR
+    echo ""
+    read -P "Is this a draft PR? (y/n): " -l draft_response
+    set -l draft_flag ""
+    if test "$draft_response" = "y" -o "$draft_response" = "yes"
+        set draft_flag "--draft"
+        echo "✅ Will create as draft PR"
+    end
 
     # create a body file for gh
     set -l body_file (mktemp)
     echo "$pr_body" > "$body_file"
 
     # create PR with editor for final edits
-    gh pr create --title "$pr_title" --body-file "$body_file" --editor
+    gh pr create --title "$pr_title" --body-file "$body_file" $draft_flag --editor
     set -l gh_status $status
 
     # cleanup

@@ -24,7 +24,9 @@ function commitplan
     # Collect per-file unified=0 diffs for modified/deleted files
     echo "🧩 Capturing per-file patches for modified/deleted files..."
     set -l per_file_patches ""
-    for f in $modified_files
+    # Combine modified and deleted files for processing
+    set -l all_changed_files $modified_files $deleted_files
+    for f in $all_changed_files
         set -l patch (git diff --unified=0 --no-color -- "$f")
         if test -n "$patch"
             set per_file_patches "$per_file_patches\n### FILE: $f\n```diff\n$patch\n```"
@@ -115,17 +117,18 @@ Constraints:
 - Dont use backslashes in commit messages. like this: \`:attribute\`, do it like this: `attribute` instead."
 
     echo "🤖 Asking Claude for a commit plan..."
-    set -l response (claude -p "$prompt")
+    set -l response (claude --model haiku -p "$prompt")
+
+    # Strip markdown code fences if present
+    set -l json_response (echo "$response" | sed -e 's/^```json//g' -e 's/^```//g' -e 's/```$//g' | string trim)
 
     # Validate JSON response
-    if not echo "$response" | jq empty 2>/dev/null
+    if not echo "$json_response" | jq empty 2>/dev/null
         echo "❌ Failed to get valid JSON response from Claude"
         echo "Response was:"
         echo "$response"
         return 1
     end
-
-    set -l json_response "$response"
 
     echo "📋 Commit plan received. Parsing commits..."
 
@@ -136,7 +139,15 @@ Constraints:
     end
 
     # Get commit count
-    set -l commit_count (echo "$json_response" | jq -r '.commits | length')
+    set -l commit_count (echo "$json_response" | jq -r '.commits | length // 0')
+
+    # Validate commit_count is a valid number
+    if test -z "$commit_count"; or not string match -qr '^[0-9]+$' "$commit_count"
+        echo "❌ Failed to parse commit count from JSON response"
+        echo "Response structure may be invalid:"
+        echo "$json_response"
+        return 1
+    end
 
     if test "$commit_count" -eq 0
         echo "ℹ️  No commits suggested."
@@ -187,7 +198,10 @@ Constraints:
         for file in $commit_files
             if test -e "$file"
                 git add "$file"
-                echo "  ✓ $file"
+                echo "  ✓ $file (staged)"
+            else if contains "$file" $deleted_files
+                git add "$file"
+                echo "  ✓ $file (deletion staged)"
             else
                 echo "  ⚠️  $file (not found, skipping)"
             end
