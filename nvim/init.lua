@@ -22,4 +22,5 @@ require("lualine-config")
 
 -- require("format-on-save")
 require("vue-lsp-config")
+require("wrap-line")
 -- require("nvimtree-on-vimenter")
