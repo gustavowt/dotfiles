@@ -76,26 +76,27 @@ function prdesc
     end
 
     # build prompt
-    echo "📝 Building Claude prompt..."
-    set -l prompt "You write precise Pull Request titles and descriptions from diffs.
+    echo "📝 Building Copilot prompt..."
+    set -l prompt "You write Pull Request titles and descriptions from git diffs.
 
-Rules:
-- First line MUST be the PR title in format: [$jira_ticket] - <concise title>
-- Follow with a blank line
-- Then write the PR body using the repo's PR template headings exactly if provided.
-- Be direct. Short sentences and bullet points.
-- No filler words, fluff, or marketing language.
-- Only describe what the diff changes and why it's needed.
-- If a section doesn't apply, write 'N/A'.
-- Keep the body under 300 words.
-- Replace JIRA references with: https://doximity.atlassian.net/browse/$jira_ticket
-- MAKE sure dont change the layout of the template if provided. Do not add any extra style or remove anything
-- DO NOT add any preamble or postamble (e.g., 'Here is the PR', 'Let me know', etc.)
-- Output ONLY the PR title and body, nothing else
+OUTPUT FORMAT (follow exactly):
+1. First line: PR title as \"[$jira_ticket] - <concise summary>\"
+2. Second line: blank
+3. Remaining lines: PR body following the template EXACTLY as provided
 
-Repository default branch: $default_branch
-Current branch: $current_branch
-JIRA ticket: $jira_ticket
+RULES:
+- Use the PR template headings exactly as provided - do not modify, add, or remove any sections
+- Include JIRA link in the body: https://doximity.atlassian.net/browse/$jira_ticket
+- Be concise: short sentences, bullet points
+- Only describe what the diff actually changes
+- If a section doesn't apply, write 'N/A'
+- Keep under 300 words
+- Output ONLY the title and body - no preamble, commentary, or closing remarks
+
+CONTEXT:
+- Repository default branch: $default_branch
+- Current branch: $current_branch
+- JIRA ticket: $jira_ticket
 "
 
     if test -n "$template_file"
@@ -106,35 +107,36 @@ JIRA ticket: $jira_ticket
 
     set prompt "$prompt\nGit Diff (unified=0):\n```diff\n$diff\n```"
 
-    # call Claude CLI and save output
-    echo "🤖 Sending prompt to Claude..."
+    # call Copilot CLI and save output
+    echo "🤖 Sending prompt to Copilot..."
     set -l temp_file (mktemp)
-    claude -p "$prompt" > "$temp_file"
+    copilot -p "$prompt" --allow-all-tools > "$temp_file"
 
     if test $status -ne 0
-        echo "❌ Claude CLI failed" >&2
+        echo "❌ Copilot CLI failed" >&2
         rm -f "$temp_file"
         return 1
     end
-    echo "✅ Claude response received"
+    echo "✅ Copilot response received"
 
     # extract title (first line) and body (rest)
     set -l pr_title (head -n 1 "$temp_file")
-    set -l pr_body (tail -n +3 "$temp_file" | string collect)  # skip title and blank line
-    
-    # Clean up AI response artifacts from the body
-    # Remove common prefixes/suffixes that Claude might add
-    set pr_body (echo "$pr_body" | sed -E '
+    # Skip title and blank line, keep rest as-is in the temp file for now
+    tail -n +3 "$temp_file" > "$temp_file.body"
+
+    # Clean up AI response artifacts from the body file directly
+    # Remove common prefixes/suffixes that Copilot might add
+    sed -E -i '' '
         /^(Here is|Here'\''s) (the|a) (PR|pull request|draft)/Id
         /^I'\''ve (created|prepared|written)/Id
         /^Based on (the diff|your changes)/Id
         /^Let me know if/Id
         /^Feel free to/Id
         /^Please (let me know|feel free)/Id
-    ')
-    
-    # Trim any leading/trailing whitespace
-    set pr_body (echo "$pr_body" | string trim)
+    ' "$temp_file.body"
+
+    # Trim only leading/trailing blank lines, preserve internal formatting
+    sed -i '' -e '/./,$!d' -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$temp_file.body"
 
     echo "📋 Creating PR with gh..."
     echo "Title: $pr_title"
@@ -142,22 +144,21 @@ JIRA ticket: $jira_ticket
     # Ask if this should be a draft PR
     echo ""
     read -P "Is this a draft PR? (y/n): " -l draft_response
-    set -l draft_flag ""
+    set -l draft_flag
     if test "$draft_response" = "y" -o "$draft_response" = "yes"
         set draft_flag "--draft"
         echo "✅ Will create as draft PR"
     end
 
-    # create a body file for gh
-    set -l body_file (mktemp)
-    echo "$pr_body" > "$body_file"
+    # use the cleaned body file for gh
+    set -l body_file "$temp_file.body"
 
     # create PR with editor for final edits
     gh pr create --title "$pr_title" --body-file "$body_file" $draft_flag --editor
     set -l gh_status $status
 
     # cleanup
-    rm -f "$temp_file" "$body_file"
+    rm -f "$temp_file" "$temp_file.body"
 
     if test $gh_status -eq 0
         echo "✅ PR created successfully!"

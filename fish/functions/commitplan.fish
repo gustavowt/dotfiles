@@ -56,7 +56,7 @@ function commitplan
         set style_hint "- Use Conventional Commits style for titles (feat:, fix:, chore:, refactor:, test:, docs:)."
     end
 
-    echo "📝 Building request for Claude..."
+    echo "📝 Building request for Copilot..."
     set -l prompt "You are a senior engineer who writes **excellent commit plans** from *unstaged* changes.
 
 Goals:
@@ -116,15 +116,16 @@ Constraints:
 - Do not add that was generated or co-authored by an AI.
 - Dont use backslashes in commit messages. like this: \`:attribute\`, do it like this: `attribute` instead."
 
-    echo "🤖 Asking Claude for a commit plan..."
-    set -l response (claude --model haiku -p "$prompt")
+    echo "🤖 Asking Copilot for a commit plan..."
+    set -l response (copilot -p "$prompt" --allow-all-tools --model claude-haiku-4.5)
 
-    # Strip markdown code fences if present
-    set -l json_response (echo "$response" | sed -e 's/^```json//g' -e 's/^```//g' -e 's/```$//g' | string trim)
+    # Strip markdown code fences if present - extract only the JSON object
+    # Remove everything before first { and everything after last }
+    set -l json_response (echo "$response" | perl -0777 -pe 's/^[^{]*//; s/[^}]*$//')
 
     # Validate JSON response
     if not echo "$json_response" | jq empty 2>/dev/null
-        echo "❌ Failed to get valid JSON response from Claude"
+        echo "❌ Failed to get valid JSON response from Copilot"
         echo "Response was:"
         echo "$response"
         return 1
