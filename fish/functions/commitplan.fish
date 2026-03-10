@@ -20,6 +20,9 @@ function commitplan
 
     echo "🧾 Building a concise diff summary (name-status)..."
     set -l name_status (git diff --name-status)
+    for uf in $untracked_files
+        set name_status $name_status "A\t$uf"
+    end
 
     # Collect per-file unified=0 diffs for modified/deleted files
     echo "🧩 Capturing per-file patches for modified/deleted files..."
@@ -56,7 +59,7 @@ function commitplan
         set style_hint "- Use Conventional Commits style for titles (feat:, fix:, chore:, refactor:, test:, docs:)."
     end
 
-    echo "📝 Building request for Copilot..."
+    echo "📝 Building request for Gemini..."
     set -l prompt "You are a senior engineer who writes **excellent commit plans** from *unstaged* changes.
 
 Goals:
@@ -116,8 +119,8 @@ Constraints:
 - Do not add that was generated or co-authored by an AI.
 - Dont use backslashes in commit messages. like this: \`:attribute\`, do it like this: `attribute` instead."
 
-    echo "🤖 Asking Copilot for a commit plan..."
-    set -l response (copilot -p "$prompt" --allow-all-tools --model claude-haiku-4.5)
+    echo "🤖 Asking Gemini for a commit plan..."
+    set -l response (echo "$prompt" | gemini -o text --yolo)
 
     # Strip markdown code fences if present - extract only the JSON object
     # Remove everything before first { and everything after last }
@@ -125,7 +128,7 @@ Constraints:
 
     # Validate JSON response
     if not echo "$json_response" | jq empty 2>/dev/null
-        echo "❌ Failed to get valid JSON response from Copilot"
+        echo "❌ Failed to get valid JSON response from Gemini"
         echo "Response was:"
         echo "$response"
         return 1
